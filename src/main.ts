@@ -1,16 +1,19 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+// import {wait} from './wait'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
+    const operation: string = core.getInput('operation')
+    const scopeKeyword: string = core.getInput('scopes-keyword')
+    const scopeTitle: string = core.getInput('scopes-title')
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    // core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
 
-    core.setOutput('time', new Date().toTimeString())
+    // core.debug(new Date().toTimeString())
+    // await wait(parseInt(ms, 10))
+    // core.debug(new Date().toTimeString())
+    const output = `${operation} - ${scopeKeyword} - ${scopeTitle}`
+    core.setOutput('message', output)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
